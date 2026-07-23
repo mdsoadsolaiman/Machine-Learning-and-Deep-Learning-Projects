@@ -1,0 +1,2 @@
+evaluation,validation-accuracy,macro-f1,macro-roc-auc,note
+loaded-in-memory-best-model-state,0.9688,0.9686,0.9975,Distinct from the 0.9766 peak validation accuracy recorded during training.

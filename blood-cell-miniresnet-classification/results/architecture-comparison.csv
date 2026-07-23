@@ -1,0 +1,4 @@
+model,best-validation-accuracy
+mlp-baseline,0.4391
+simple-cnn,0.8812
+miniresnet-full,0.9766

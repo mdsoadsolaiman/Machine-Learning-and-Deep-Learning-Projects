@@ -1,0 +1,3 @@
+model,training-f1,mean-five-fold-cv-f1,held-out-test-evaluation
+logistic-regression,1.0000,1.0000,not performed
+rbf-svm,1.0000,0.9699,not performed

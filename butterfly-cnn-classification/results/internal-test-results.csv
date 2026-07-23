@@ -1,0 +1,2 @@
+selected-optimiser,learning-rate,validation-accuracy-percent,internal-test-accuracy-percent,internal-test-size,evaluation-note
+Adam,0.001,93.75,72.22,18,Internal split only; the supplied external 30-image test set was not evaluated.

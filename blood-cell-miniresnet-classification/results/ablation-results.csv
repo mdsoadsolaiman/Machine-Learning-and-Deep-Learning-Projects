@@ -1,0 +1,5 @@
+configuration,class-weighting,label-smoothing,optimiser,scheduler,peak-validation-accuracy
+miniresnet-full,yes,0.1,AdamW,cosine,0.9766
+miniresnet-no-class-weighting,no,0.1,AdamW,cosine,0.9750
+miniresnet-no-label-smoothing,yes,0.0,AdamW,cosine,0.9734
+miniresnet-adam,yes,0.1,Adam,none,0.9656

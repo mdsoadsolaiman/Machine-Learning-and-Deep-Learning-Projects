@@ -1,0 +1,3 @@
+partition,digit-1,digit-7,total
+training,50,50,100
+test,100,900,1000
