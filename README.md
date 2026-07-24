@@ -34,7 +34,7 @@ Raw datasets are excluded where redistribution permission, provenance or licence
 ## Repository Structure
 
 ```text
-machine-learning-and-deep-learning-projects/
+Machine Learning and Deep Learning Projects/
 ├── butterfly-cnn-classification/
 ├── diabetes-mlp-classification/
 ├── blood-cell-miniresnet-classification/
