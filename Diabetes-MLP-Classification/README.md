@@ -1,210 +1,236 @@
 # 🩺 Deep Learning for Diabetes Prediction
-### Comparative Evaluation of Multi-Layer Perceptron Architectures in PyTorch
+### Comparative Evaluation of Multi-Layer Perceptron Architectures using PyTorch
+
+> A comparative deep learning study evaluating multiple Multi-Layer Perceptron (MLP) architectures for binary diabetes prediction using clinical health indicators, with systematic preprocessing, controlled model comparison, and comprehensive performance evaluation.
 
 <p align="center">
-
-<img src="figures/ROC curve.png" width="800">
-
-</p>
-
-<p align="center">
-
-<img src="https://img.shields.io/badge/Python-3.12-blue">
-<img src="https://img.shields.io/badge/PyTorch-Deep%20Learning-red">
-<img src="https://img.shields.io/badge/Binary-Classification-success">
-<img src="https://img.shields.io/badge/Healthcare-Machine%20Learning-brightgreen">
-<img src="https://img.shields.io/badge/Status-Completed-success">
-
+<img src="figures/ROC curve.png" width="850">
 </p>
 
 ---
 
-## Overview
+# Overview
 
-This project develops and evaluates multiple **Multi-Layer Perceptron (MLP)** architectures for diabetes prediction using clinical health indicators.
+Early identification of diabetes enables timely clinical intervention and reduces the risk of long-term complications. Machine learning provides an effective approach for analysing clinical measurements and estimating diabetes risk.
 
-Rather than training a single neural network, this study investigates how network capacity influences predictive performance by comparing **Small**, **Medium**, and **Large** MLP architectures under identical preprocessing and training conditions.
+This project investigates the effectiveness of **Multi-Layer Perceptron (MLP)** models for binary diabetes classification using routinely collected medical information. Instead of training a single neural network, three architectures with different network capacities were developed and compared under identical preprocessing and training conditions.
 
 The complete workflow includes:
 
 - Exploratory Data Analysis (EDA)
-- Data preprocessing and feature engineering
-- Missing-value treatment
-- Neural network development in PyTorch
-- Hyperparameter comparison
-- Model evaluation using multiple performance metrics
+- Data cleaning and preprocessing
+- Missing value treatment
+- Feature engineering
+- Neural network implementation in PyTorch
+- Comparative model evaluation
 - Final model selection using ROC-AUC
+- Performance analysis on unseen test data
 
 ---
 
-# Dataset
+# Methodology
 
-The model uses eight routinely collected clinical measurements.
+The project uses the well-known **Pima Indians Diabetes Dataset**, containing clinical measurements collected from female patients.
 
-| Feature |
-|----------|
-| Pregnancies |
-| Glucose |
-| BloodPressure |
-| SkinThickness |
-| Insulin |
-| BMI |
-| DiabetesPedigreeFunction |
-| Age |
+The predictor variables include:
 
-Target variable:
+- Pregnancies
+- Glucose
+- Blood Pressure
+- Skin Thickness
+- Insulin
+- BMI
+- Diabetes Pedigree Function
+- Age
+
+The target variable is:
 
 - **Outcome = 0** → Non-diabetic
 - **Outcome = 1** → Diabetic
+
+Before model development, the dataset underwent a structured preprocessing pipeline designed to improve data quality and model generalisation.
+
+The preprocessing process included:
+
+- Identification of physiologically impossible zero values
+- Missing-value imputation
+- Outlier investigation
+- Feature scaling
+- Stratified train-validation-test split
 
 ---
 
 # Exploratory Data Analysis
 
-The initial analysis identified skewed feature distributions, missing-value patterns represented by physiologically impossible zero values, and varying relationships between clinical variables.
+## Correlation Analysis
 
-## Correlation Matrix
-
+<p align="center">
 <img src="figures/Correlation Heatmap.png">
+</p>
 
-Glucose exhibited the strongest positive relationship with diabetes outcome, followed by BMI, Age, and Pregnancies.
+The correlation matrix shows that **Glucose** exhibits the strongest relationship with diabetes outcome, followed by **BMI**, **Age**, and **Pregnancies**, indicating that these variables provide the greatest predictive value.
 
 ---
 
 ## Raw Data Distribution
 
+<p align="center">
 <img src="figures/Histogram of the raw data.png">
+</p>
+
+The raw feature distributions reveal substantial skewness and unrealistic zero values in several medical variables, motivating the need for data cleaning before model training.
 
 ---
 
 ## Raw Feature Boxplots
 
+<p align="center">
 <img src="figures/Boxplot for the Raw dataset.png">
+</p>
+
+The boxplots highlight numerous outliers and physiologically impossible observations, particularly within **Insulin**, **Skin Thickness**, and **Blood Pressure**.
 
 ---
 
-# Data Preprocessing
+# Data Cleaning
 
-A structured preprocessing pipeline was implemented before model training.
-
-### Cleaning Steps
-
-- Detection of impossible zero values
-- Mean imputation for selected clinical variables
-- Class-wise IQR filtering
-- Feature scaling
-- Stratified train-validation-test split
-
-The cleaned dataset exhibits more realistic feature distributions while preserving important clinical variation.
-
----
+After preprocessing, feature distributions became more consistent while preserving clinically meaningful variability.
 
 ## Cleaned Feature Distributions
 
+<p align="center">
 <img src="figures/Density curve for the cleaned data.png">
+</p>
 
 ---
 
 ## Cleaned Feature Boxplots
 
+<p align="center">
 <img src="figures/Boxplot for the cleaned dataset.png">
+</p>
+
+The cleaned dataset demonstrates improved feature consistency and reduced noise, providing a stronger foundation for model training.
 
 ---
 
-# Model Development
+# Deep Learning Models
 
-Three fully connected neural network architectures were implemented in **PyTorch**.
+Three fully connected neural network architectures were implemented using **PyTorch**.
 
 | Model | Hidden Layers | Dropout |
-|---------|--------------|---------|
+|:------|:-------------:|:--------:|
 | Exp1 Small | 32 → 16 | 0.20 |
 | Exp2 Medium | 64 → 32 | 0.20 |
 | Exp3 Large | 128 → 64 | 0.30 |
 
-Each model uses
+All models were trained using:
 
-- ReLU activation
-- Adam optimizer
-- Binary Cross Entropy loss
-- Early stopping
-- Mini-batch gradient descent
+- PyTorch
+- Adam Optimiser
+- Binary Cross-Entropy Loss
+- Early Stopping
+- Mini-batch Gradient Descent
 
 ---
 
-# Learning Curves
+# Training Behaviour
 
-## Small Network
+## Small MLP
 
+<p align="center">
 <img src="figures/Loss curve of the Small Hidden Layers.png">
+</p>
 
 ---
 
-## Medium Network
+## Medium MLP
 
+<p align="center">
 <img src="figures/Loss curve of the Medium Hidden Layers.png">
+</p>
 
 ---
 
-## Large Network
+## Large MLP
 
+<p align="center">
 <img src="figures/Loss curve of the Large Hidden Layers.png">
+</p>
 
-The larger architecture demonstrated the most stable optimisation behaviour while achieving the highest validation ROC-AUC.
+The larger architecture demonstrated the most stable learning behaviour while achieving the highest validation ROC-AUC.
 
 ---
 
-# Model Performance
+# Model Comparison
 
 | Model | Accuracy | Precision | Recall | F1-score | ROC-AUC |
-|---------|---------|----------|--------|---------|---------|
-| Small | 79.31% | 64.29% | **90.00%** | **75.00%** | 0.8655 |
-| Medium | 78.45% | 64.15% | 85.00% | 73.12% | 0.8632 |
-| **Large** | 77.59% | 63.46% | 82.50% | 71.74% | **0.8704** |
+|:------|---------:|----------:|--------:|---------:|---------:|
+| Exp1 Small | **79.31%** | **64.29%** | **90.00%** | **75.00%** | 0.8655 |
+| Exp2 Medium | 78.45% | 64.15% | 85.00% | 73.12% | 0.8632 |
+| **Exp3 Large** | 77.59% | 63.46% | 82.50% | 71.74% | **0.8704** |
 
-Although the Small network produced the highest accuracy and F1-score, the Large model achieved the strongest ROC-AUC and was therefore selected as the final model.
+Although the Small model achieved the highest validation accuracy and F1-score, the Large model produced the strongest ROC-AUC, providing the best overall discrimination capability and was therefore selected as the final model.
 
 ---
 
 # ROC Analysis
 
-<img src="figures/ROC curve.png">
+<p align="center">
+<img src="figures/ROC curve.png" width="750">
+</p>
 
-The selected model achieved an **Area Under the ROC Curve (AUC) of approximately 0.87**, indicating good discrimination between diabetic and non-diabetic patients across varying classification thresholds.
+The selected model achieved an **Area Under the ROC Curve (AUC) of approximately 0.86**, demonstrating strong discrimination between diabetic and non-diabetic patients across varying classification thresholds.
 
 ---
 
-# Validation Confusion Matrix
+# Validation Performance
 
+<p align="center">
 <img src="figures/Confusion Matrix.png">
+</p>
+
+The validation confusion matrix indicates that the model correctly identifies the majority of diabetic and non-diabetic cases while maintaining a balanced trade-off between sensitivity and specificity.
 
 ---
 
-# Final Test Results
+# Final Test Evaluation
 
-The final selected model was evaluated on an unseen test dataset.
+<p align="center">
+<img src="figures/Confusion Matrix - Test Set.png">
+</p>
 
-<img src="figures/Confusion Matrix -  Test Set.png">
+The final model was evaluated on an unseen test dataset.
 
-| Metric | Score |
-|---------|------:|
+| Metric | Value |
+|:-------|------:|
 | Accuracy | 72.55% |
 | Precision | 61.19% |
 | Recall | 71.93% |
 | F1-score | 66.13% |
+
+These results demonstrate that the selected model generalises reasonably well to previously unseen data while maintaining useful predictive performance.
 
 ---
 
 # Repository Structure
 
 ```text
-diabetes-prediction-mlp/
+Diabetes-MLP-Classification/
+│
+├── notebooks/
+│   └── diabetes-mlp-classification.ipynb
+│
+├── figures/
 │
 ├── data/
-├── figures/
-├── notebooks/
+│
 ├── reports/
+│
 ├── results/
+│
 ├── README.md
+│
 └── requirements.txt
 ```
 
@@ -225,29 +251,45 @@ diabetes-prediction-mlp/
 
 This project demonstrates practical experience in:
 
-- Clinical data preprocessing
+- Medical data preprocessing
 - Exploratory data analysis
 - Feature engineering
-- Neural network implementation
+- Deep neural network development
 - Binary classification
-- Performance evaluation
-- ROC analysis
 - Model comparison
-- Deep learning using PyTorch
+- ROC analysis
+- Performance evaluation
+- PyTorch implementation
+- Healthcare machine learning
+
+---
+
+# Reproducing the Project
+
+To reproduce the experiments:
+
+1. Clone this repository.
+2. Install the required Python dependencies.
+3. Place the dataset in the `data/` directory.
+4. Run:
+
+```bash
+jupyter notebook notebooks/diabetes-mlp-classification.ipynb
+```
+
+Training the notebook will reproduce the preprocessing pipeline, model comparison experiments, evaluation metrics, and visualisations presented in this repository.
 
 ---
 
 # Limitations
 
-- Relatively small dataset
-- Limited to MLP architectures
-- Not intended for clinical diagnosis
-- Additional external validation would be required before deployment
+- The dataset is relatively small compared with modern clinical datasets.
+- Only fully connected neural networks were investigated.
+- Hyperparameter optimisation was intentionally limited.
+- This model is intended for educational and research purposes only and should not be used for clinical diagnosis.
 
 ---
 
-# Author
+# Acknowledgement
 
-**Md Soad Solaiman**
-
----
+This repository presents a professionally organised version of a university deep learning project. The implementation, methodology, and reported experimental results remain unchanged, while the repository structure, documentation, and presentation have been redesigned to showcase the project as part of a professional machine learning portfolio.
