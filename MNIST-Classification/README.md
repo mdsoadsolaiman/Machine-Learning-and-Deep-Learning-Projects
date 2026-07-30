@@ -201,12 +201,6 @@ The tuned RBF Kernel SVM also achieved perfect classification performance on the
 
 # Key Visualisations
 
-### Average Digit Images
-
-<p align="center">
-<img src="figures/average-digit-images.png" width="650">
-</p>
-
 The average digit images illustrate the typical visual characteristics learned from each class. Digit **1** exhibits a highly consistent vertical structure, whereas digit **7** demonstrates greater variability in stroke angle and horizontal bar formation.
 
 ---
