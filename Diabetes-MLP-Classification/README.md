@@ -1,119 +1,216 @@
-# 🩺 Diabetes Prediction using Multi-Layer Perceptron (PyTorch)
+# 🩺 Deep Learning for Diabetes Prediction
+### Comparative Evaluation of Multi-Layer Perceptron Architectures in PyTorch
 
-> An end-to-end deep learning project that develops, compares, and evaluates multiple Multi-Layer Perceptron (MLP) architectures for diabetes prediction using clinical measurements.
+<p align="center">
 
-![Validation Comparison](figures/validation-experiment-comparison.png)
+<img src="figures/ROC curve(1).png" width="800">
 
----
+</p>
 
-## Project Overview
+<p align="center">
 
-Early identification of diabetes can support timely clinical intervention and reduce long-term health complications. This project develops an MLP classifier in **PyTorch** using the **Pima Indians Diabetes Dataset** and systematically compares three neural network architectures under identical experimental conditions.
+<img src="https://img.shields.io/badge/Python-3.12-blue">
+<img src="https://img.shields.io/badge/PyTorch-Deep%20Learning-red">
+<img src="https://img.shields.io/badge/Binary-Classification-success">
+<img src="https://img.shields.io/badge/Healthcare-Machine%20Learning-brightgreen">
+<img src="https://img.shields.io/badge/Status-Completed-success">
 
-The final model was selected using **ROC-AUC**, providing a clinically meaningful assessment of discrimination performance beyond simple accuracy.
-
----
-
-## Dataset
-
-The dataset contains **768 patient records** with eight clinical features:
-
-- Pregnancies
-- Glucose
-- Blood Pressure
-- Skin Thickness
-- Insulin
-- BMI
-- Diabetes Pedigree Function
-- Age
-
-Target:
-- Outcome (0 = Non-diabetic, 1 = Diabetic)
+</p>
 
 ---
 
-## Data Preprocessing
+## Overview
 
-The preprocessing pipeline included:
+This project develops and evaluates multiple **Multi-Layer Perceptron (MLP)** architectures for diabetes prediction using clinical health indicators.
 
-- Exploratory data analysis (histograms, boxplots, density plots and correlation heatmap)
-- Identification of physiologically impossible zero values
-- Mean imputation for Blood Pressure and Skin Thickness zeros
-- Class-wise IQR outlier treatment for Glucose and BMI
-- Z-score feature standardisation
-- Stratified train/validation split
+Rather than training a single neural network, this study investigates how network capacity influences predictive performance by comparing **Small**, **Medium**, and **Large** MLP architectures under identical preprocessing and training conditions.
 
-![Feature Distributions](figures/cleaned-feature-distributions.png)
+The complete workflow includes:
 
-![Correlation Heatmap](figures/feature-correlation-heatmap.png)
+- Exploratory Data Analysis (EDA)
+- Data preprocessing and feature engineering
+- Missing-value treatment
+- Neural network development in PyTorch
+- Hyperparameter comparison
+- Model evaluation using multiple performance metrics
+- Final model selection using ROC-AUC
 
 ---
 
-## Model Development
+# Dataset
 
-All models were implemented using:
+The model uses eight routinely collected clinical measurements.
 
-- PyTorch
+| Feature |
+|----------|
+| Pregnancies |
+| Glucose |
+| BloodPressure |
+| SkinThickness |
+| Insulin |
+| BMI |
+| DiabetesPedigreeFunction |
+| Age |
+
+Target variable:
+
+- **Outcome = 0** → Non-diabetic
+- **Outcome = 1** → Diabetic
+
+---
+
+# Exploratory Data Analysis
+
+The initial analysis identified skewed feature distributions, missing-value patterns represented by physiologically impossible zero values, and varying relationships between clinical variables.
+
+## Correlation Matrix
+
+<img src="figures/Correlation Heatmap(1).png">
+
+Glucose exhibited the strongest positive relationship with diabetes outcome, followed by BMI, Age, and Pregnancies.
+
+---
+
+## Raw Data Distribution
+
+<img src="figures/Histogram of the raw data(1).png">
+
+---
+
+## Raw Feature Boxplots
+
+<img src="figures/Boxplot for the Raw dataset(1).png">
+
+---
+
+# Data Preprocessing
+
+A structured preprocessing pipeline was implemented before model training.
+
+### Cleaning Steps
+
+- Detection of impossible zero values
+- Mean imputation for selected clinical variables
+- Class-wise IQR filtering
+- Feature scaling
+- Stratified train-validation-test split
+
+The cleaned dataset exhibits more realistic feature distributions while preserving important clinical variation.
+
+---
+
+## Cleaned Feature Distributions
+
+<img src="figures/Density curve for the cleaned data(1).png">
+
+---
+
+## Cleaned Feature Boxplots
+
+<img src="figures/Boxplot for the cleaned dataset(1).png">
+
+---
+
+# Model Development
+
+Three fully connected neural network architectures were implemented in **PyTorch**.
+
+| Model | Hidden Layers | Dropout |
+|---------|--------------|---------|
+| Exp1 Small | 32 → 16 | 0.20 |
+| Exp2 Medium | 64 → 32 | 0.20 |
+| Exp3 Large | 128 → 64 | 0.30 |
+
+Each model uses
+
 - ReLU activation
-- Adam optimiser
-- BCEWithLogitsLoss
-- Dropout regularisation
+- Adam optimizer
+- Binary Cross Entropy loss
 - Early stopping
-- Mini-batch training
-
-| Model | Hidden Layers | LR | Dropout |
-|-------|---------------|----:|---------:|
-| Exp1 Small | 32 → 16 | 0.0100 | 0.20 |
-| Exp2 Baseline | 64 → 32 | 0.0010 | 0.20 |
-| **Exp3 Large** | **128 → 64** | **0.0005** | **0.30** |
+- Mini-batch gradient descent
 
 ---
 
-## Validation Performance
+# Learning Curves
 
-| Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
-|------|---------:|----------:|-------:|---:|--------:|
-| Exp1 Small | 0.7931 | 0.6429 | **0.9000** | **0.7500** | 0.8655 |
-| Exp2 Baseline | 0.7845 | 0.6415 | 0.8500 | 0.7312 | 0.8632 |
-| **Exp3 Large** | 0.7759 | 0.6346 | 0.8250 | 0.7174 | **0.8704** |
+## Small Network
 
-The Large MLP achieved the highest validation ROC-AUC and was selected as the final model.
-
-![Training Curves](figures/training-loss-curves.png)
+<img src="figures/Loss curve of the Small Hidden Layers(1).png">
 
 ---
 
-## Final Test Performance
+## Medium Network
+
+<img src="figures/Loss curve of the Medium Hidden Layers(1).png">
+
+---
+
+## Large Network
+
+<img src="figures/Loss curve of the Large Hidden Layers(1).png">
+
+The larger architecture demonstrated the most stable optimisation behaviour while achieving the highest validation ROC-AUC.
+
+---
+
+# Model Performance
+
+| Model | Accuracy | Precision | Recall | F1-score | ROC-AUC |
+|---------|---------|----------|--------|---------|---------|
+| Small | 79.31% | 64.29% | **90.00%** | **75.00%** | 0.8655 |
+| Medium | 78.45% | 64.15% | 85.00% | 73.12% | 0.8632 |
+| **Large** | 77.59% | 63.46% | 82.50% | 71.74% | **0.8704** |
+
+Although the Small network produced the highest accuracy and F1-score, the Large model achieved the strongest ROC-AUC and was therefore selected as the final model.
+
+---
+
+# ROC Analysis
+
+<img src="figures/ROC curve(1).png">
+
+The selected model achieved an **Area Under the ROC Curve (AUC) of approximately 0.87**, indicating good discrimination between diabetic and non-diabetic patients across varying classification thresholds.
+
+---
+
+# Validation Confusion Matrix
+
+<img src="figures/Confusion Matrix(1).png">
+
+---
+
+# Final Test Results
+
+The final selected model was evaluated on an unseen test dataset.
+
+<img src="figures/Confusion Matrix -  Test Set(1).png">
 
 | Metric | Score |
-|--------|------:|
-| Accuracy | **74.51%** |
-| Precision | **63.64%** |
-| Recall | **73.68%** |
-| F1-score | **68.29%** |
-| ROC-AUC | **0.8480** |
-
-![Confusion Matrix](figures/test-confusion-matrix.png)
-
-The selected model demonstrated good generalisation while maintaining strong sensitivity for identifying diabetic patients.
+|---------|------:|
+| Accuracy | 72.55% |
+| Precision | 61.19% |
+| Recall | 71.93% |
+| F1-score | 66.13% |
 
 ---
 
-## Repository Structure
+# Repository Structure
 
 ```text
-diabetes-mlp-classification/
+diabetes-prediction-mlp/
+│
 ├── data/
 ├── figures/
 ├── notebooks/
 ├── reports/
 ├── results/
-└── README.md
+├── README.md
+└── requirements.txt
 ```
 
 ---
 
-## Technologies
+# Technologies
 
 - Python
 - PyTorch
@@ -124,17 +221,33 @@ diabetes-mlp-classification/
 
 ---
 
-## Key Learning Outcomes
+# Key Learning Outcomes
+
+This project demonstrates practical experience in:
 
 - Clinical data preprocessing
 - Exploratory data analysis
-- Neural network design
-- Hyperparameter comparison
-- Medical AI evaluation
-- ROC-AUC based model selection
+- Feature engineering
+- Neural network implementation
+- Binary classification
+- Performance evaluation
+- ROC analysis
+- Model comparison
+- Deep learning using PyTorch
 
 ---
 
-## Acknowledgement
+# Limitations
 
-This repository is a professionally documented version of an academic coursework project. The underlying methodology and experimental findings remain unchanged while the documentation has been redesigned for reproducibility and portfolio presentation.
+- Relatively small dataset
+- Limited to MLP architectures
+- Not intended for clinical diagnosis
+- Additional external validation would be required before deployment
+
+---
+
+# Author
+
+**Md Soad Solaiman**
+
+---
