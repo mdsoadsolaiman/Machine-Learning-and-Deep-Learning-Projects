@@ -1,4 +1,5 @@
-# ✍️ Handwritten Digit Classification and Clustering using Machine Learning
+# ✍️ Handwritten Digit Classification and Clustering using Machine Learning   ---- ok
+
 ### Comparative Analysis of Logistic Regression, RBF Kernel SVM, PCA, and K-Means Clustering on MNIST Digits
 
 > A machine learning study that combines supervised classification and unsupervised clustering to investigate handwritten digit recognition. The project evaluates Logistic Regression and RBF Kernel Support Vector Machine (SVM) for binary digit classification while using Principal Component Analysis (PCA) and K-Means clustering to analyse writing style variations of handwritten digit **7**.
