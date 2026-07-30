@@ -4,9 +4,6 @@
 
 > A machine learning project that combines supervised classification and unsupervised clustering to investigate handwritten digit recognition. The project compares Logistic Regression and RBF Kernel Support Vector Machine (SVM) for binary classification while applying Principal Component Analysis (PCA) and K-Means clustering to explore handwriting style variations of digit **7**.
 
-<p align="center">
-  <img src="figures/digit-pca-projection.png" width="850">
-</p>
 
 ---
 
@@ -114,10 +111,6 @@ Silhouette scores were used to evaluate cluster cohesion and separation. Based o
 ---
 
 ## Cluster Centres
-
-<p align="center">
-<img src="figures/digit-7-cluster-centres.png">
-</p>
 
 Each cluster centre represents the average handwriting pattern of its assigned cluster, highlighting differences in stroke orientation, curvature, and writing style.
 
