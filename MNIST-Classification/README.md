@@ -4,6 +4,11 @@
 
 > A machine learning project that combines supervised classification and unsupervised clustering to investigate handwritten digit recognition. The project compares Logistic Regression and RBF Kernel Support Vector Machine (SVM) for binary classification while applying Principal Component Analysis (PCA) and K-Means clustering to explore handwriting style variations of digit **7**.
 
+### Average Digit Images
+
+<p align="center">
+<img src="figures/average-digit-images.png" width="650">
+</p>
 
 ---
 
