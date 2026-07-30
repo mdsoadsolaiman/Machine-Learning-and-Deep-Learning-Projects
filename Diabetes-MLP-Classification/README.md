@@ -3,7 +3,7 @@
 
 <p align="center">
 
-<img src="figures/ROC curve(1).png" width="800">
+<img src="figures/ROC curve.png" width="800">
 
 </p>
 
@@ -65,7 +65,7 @@ The initial analysis identified skewed feature distributions, missing-value patt
 
 ## Correlation Matrix
 
-<img src="figures/Correlation Heatmap(1).png">
+<img src="figures/Correlation Heatmap.png">
 
 Glucose exhibited the strongest positive relationship with diabetes outcome, followed by BMI, Age, and Pregnancies.
 
@@ -73,13 +73,13 @@ Glucose exhibited the strongest positive relationship with diabetes outcome, fol
 
 ## Raw Data Distribution
 
-<img src="figures/Histogram of the raw data(1).png">
+<img src="figures/Histogram of the raw data.png">
 
 ---
 
 ## Raw Feature Boxplots
 
-<img src="figures/Boxplot for the Raw dataset(1).png">
+<img src="figures/Boxplot for the Raw dataset.png">
 
 ---
 
@@ -101,13 +101,13 @@ The cleaned dataset exhibits more realistic feature distributions while preservi
 
 ## Cleaned Feature Distributions
 
-<img src="figures/Density curve for the cleaned data(1).png">
+<img src="figures/Density curve for the cleaned data.png">
 
 ---
 
 ## Cleaned Feature Boxplots
 
-<img src="figures/Boxplot for the cleaned dataset(1).png">
+<img src="figures/Boxplot for the cleaned dataset.png">
 
 ---
 
@@ -135,19 +135,19 @@ Each model uses
 
 ## Small Network
 
-<img src="figures/Loss curve of the Small Hidden Layers(1).png">
+<img src="figures/Loss curve of the Small Hidden Layers.png">
 
 ---
 
 ## Medium Network
 
-<img src="figures/Loss curve of the Medium Hidden Layers(1).png">
+<img src="figures/Loss curve of the Medium Hidden Layers.png">
 
 ---
 
 ## Large Network
 
-<img src="figures/Loss curve of the Large Hidden Layers(1).png">
+<img src="figures/Loss curve of the Large Hidden Layers.png">
 
 The larger architecture demonstrated the most stable optimisation behaviour while achieving the highest validation ROC-AUC.
 
@@ -167,7 +167,7 @@ Although the Small network produced the highest accuracy and F1-score, the Large
 
 # ROC Analysis
 
-<img src="figures/ROC curve(1).png">
+<img src="figures/ROC curve.png">
 
 The selected model achieved an **Area Under the ROC Curve (AUC) of approximately 0.87**, indicating good discrimination between diabetic and non-diabetic patients across varying classification thresholds.
 
@@ -175,7 +175,7 @@ The selected model achieved an **Area Under the ROC Curve (AUC) of approximately
 
 # Validation Confusion Matrix
 
-<img src="figures/Confusion Matrix(1).png">
+<img src="figures/Confusion Matrix.png">
 
 ---
 
@@ -183,7 +183,7 @@ The selected model achieved an **Area Under the ROC Curve (AUC) of approximately
 
 The final selected model was evaluated on an unseen test dataset.
 
-<img src="figures/Confusion Matrix -  Test Set(1).png">
+<img src="figures/Confusion Matrix -  Test Set.png">
 
 | Metric | Score |
 |---------|------:|
