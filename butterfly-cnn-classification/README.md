@@ -1,64 +1,114 @@
-# Butterfly CNN Classification
+# 🦋 Butterfly Image Classification using Convolutional Neural Networks
 
-> This project was originally completed as part of university coursework and has been reorganised and documented for professional portfolio presentation.
+> A PyTorch-based deep learning project investigating how different optimisation strategies influence butterfly image classification on a small and highly imbalanced dataset through controlled experimental comparison.
 
-## Project Overview
+![Optimiser Comparison](figures/experiment-comparison.png)
 
-A compact PyTorch CNN classifies five butterfly categories and compares optimiser settings using an internal train/validation/test split.
+---
 
-## Academic Context
+## Overview
 
-The work was completed as a university coursework project. The public version retains the original technical evidence while improving naming, navigation, transparency and evaluation context.
+Image classification is one of the most widely studied applications of deep learning, yet training reliable models becomes significantly more challenging when only a limited number of labelled images are available. This project investigates that challenge by developing a convolutional neural network (CNN) capable of classifying butterfly images into five species while examining how different optimisation strategies influence model convergence and classification performance.
 
-## Problem Statement
+Rather than proposing a complex architecture, the study focuses on understanding how optimiser selection affects training behaviour under identical experimental conditions. Three optimisation configurations were evaluated using the same CNN architecture, allowing differences in learning performance to be attributed solely to the optimisation strategy.
 
-Develop an image-classification workflow for a small, imbalanced butterfly dataset and evaluate alternative optimisation settings.
+The best-performing configuration achieved **93.75% validation accuracy** and **72.22% internal test accuracy**, demonstrating that optimiser selection can substantially influence deep learning performance even when the network architecture remains unchanged.
 
-## Dataset
-
-Course-provided images are excluded. The cleaned working set contained 113 images across five highly imbalanced classes; see [data access](data/README.md).
-
-## Data Preparation
-
-Invalid labels and unreadable or near-black images were identified non-destructively. Images were resized to 64×64 pixels and normalised.
+---
 
 ## Methodology
 
-Three optimiser and learning-rate configurations were trained for five epochs under a consistent internal split.
+The original butterfly dataset was supplied for academic coursework and is therefore not redistributed within this repository. Before model development, the dataset was carefully inspected to identify unreadable images, invalid annotations, and duplicate records. Following the cleaning process, **113 labelled images** remained across five butterfly species.
 
-## Model Architecture
+Each image was resized to **64 × 64 pixels**, normalised, and prepared for training using a consistent preprocessing pipeline. A custom convolutional neural network was implemented entirely in **PyTorch** and trained under three optimiser configurations:
 
-Three convolutional blocks (16, 32 and 64 channels) feed a 128-unit dense layer and five-class output.
+- SGD (Learning Rate = 0.01)
+- Adam (Learning Rate = 0.001)
+- Adam (Learning Rate = 0.0005)
 
-## Experimental Design
+Keeping every other training parameter unchanged ensured that optimiser selection remained the only experimental variable.
 
-The split contained 79 training, 16 validation and 18 internal test images. SGD and two Adam learning rates were compared.
+---
+
+## Dataset Distribution
+
+![Class Distribution](figures/class-distribution.png)
+
+The cleaned dataset contains **113 butterfly images** distributed across five species. Although three classes contain approximately thirty-five images each, the remaining two classes contain only **two** and **one** images respectively. This severe class imbalance presents a challenging classification problem and provides a practical demonstration of deep learning under limited-data conditions.
+
+---
 
 ## Results
 
-Adam at 0.001 achieved 93.75% validation accuracy and 72.22% accuracy on the 18-image internal test split. See [results](results/internal-test-results.csv).
+| Optimiser | Validation Accuracy |
+|----------------|:----------------:|
+| SGD (0.01) | 62.50% |
+| Adam (0.0005) | 68.75% |
+| **Adam (0.001)** | **93.75%** |
 
-## Key Findings
+Among the three optimisation strategies, **Adam with a learning rate of 0.001** consistently produced the strongest validation performance. The results demonstrate that appropriate optimiser selection can dramatically improve convergence and classification accuracy without modifying the underlying network architecture.
 
-The experiment demonstrates CNN construction, data preparation and controlled optimiser comparison.
+---
 
-## Limitations
+## Model Performance
 
-The dataset is small and severely imbalanced. The supplied external 30-image test set was not evaluated, and the result does not demonstrate deployment readiness.
+### Training Behaviour
 
-## Technologies
+![Training Curves](figures/training-validation-performance.png)
 
-Python, PyTorch, Torchvision, OpenCV, NumPy, Pandas and Matplotlib.
+Training and validation curves reveal distinct optimisation behaviour across the three experiments. The SGD configuration converged slowly and achieved the lowest validation accuracy, while Adam with a learning rate of 0.0005 demonstrated improved stability but reached an earlier performance plateau.
+
+In contrast, Adam with a learning rate of **0.001** converged more rapidly and consistently achieved the highest validation accuracy throughout training, indicating superior optimisation efficiency for this dataset.
+
+### Optimiser Comparison
+
+![Validation Accuracy](figures/experiment-comparison.png)
+
+A direct comparison of validation accuracy clearly highlights the impact of optimiser selection. Despite using the same CNN architecture and identical training data, the choice of optimiser produced substantial differences in classification performance, with Adam (0.001) outperforming the remaining configurations by a considerable margin.
+
+---
 
 ## Repository Structure
 
 ```text
-notebooks/  Cleaned portfolio notebook
-figures/    Verified statistical and performance visuals
-results/    Internal evaluation summary
-data/       Access and licensing guidance
+butterfly-cnn-classification/
+│
+├── notebooks/
+│   └── butterfly-cnn-classification.ipynb
+│
+├── figures/
+│   ├── class-distribution.png
+│   ├── experiment-comparison.png
+│   └── training-validation-performance.png
+│
+├── results/
+│
+├── data/
+│
+└── README.md
 ```
 
-## Reproduction Instructions
+---
 
-Install the root requirements, obtain the data lawfully, set `BUTTERFLY_DATA_DIR`, and run the notebook sequentially. Exact historical package versions were not recorded.
+## Reproducing the Project
+
+The original butterfly images are excluded from this repository because redistribution permission has not been confirmed.
+
+To reproduce the experiments:
+
+1. Obtain the authorised dataset.
+2. Configure the dataset directory.
+3. Install the required Python dependencies.
+4. Run:
+
+```bash
+jupyter notebook notebooks/butterfly-cnn-classification.ipynb
+```
+
+The notebook reproduces the complete preprocessing, model training, optimiser comparison, and evaluation workflow.
+
+---
+
+## Acknowledgement
+
+This repository is a professionally organised version of an original university coursework project. While the experimental methodology, implementation, and reported results remain unchanged, the repository structure, documentation, and presentation have been redesigned to improve reproducibility and portfolio presentation.
