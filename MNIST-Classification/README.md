@@ -1,100 +1,93 @@
-# ✍️ Handwritten Digit Classification and Clustering using Machine Learning   ---- ok
+# ✍️ Handwritten Digit Classification and Clustering using Machine Learning
 
 ### Comparative Analysis of Logistic Regression, RBF Kernel SVM, PCA, and K-Means Clustering on MNIST Digits
 
-> A machine learning study that combines supervised classification and unsupervised clustering to investigate handwritten digit recognition. The project evaluates Logistic Regression and RBF Kernel Support Vector Machine (SVM) for binary digit classification while using Principal Component Analysis (PCA) and K-Means clustering to analyse writing style variations of handwritten digit **7**.
+> A machine learning project that combines supervised classification and unsupervised clustering to investigate handwritten digit recognition. The project compares Logistic Regression and RBF Kernel Support Vector Machine (SVM) for binary classification while applying Principal Component Analysis (PCA) and K-Means clustering to explore handwriting style variations of digit **7**.
 
 <p align="center">
-<img src="figures/PCA Projection of Handwritten Digits 1 and 7.png" width="850">
+  <img src="figures/digit-pca-projection.png" width="850">
 </p>
 
 ---
 
-# Overview
+## Project Overview
 
-Handwritten digit recognition is a fundamental computer vision problem that has played a significant role in the development of modern machine learning. Beyond accurate classification, understanding the structural variations of handwritten digits provides valuable insight into pattern recognition and feature learning.
+Handwritten digit recognition is one of the classical problems in computer vision and machine learning. While classification models aim to identify digits accurately, unsupervised learning techniques can reveal structural similarities and writing-style variations that are not captured by classification alone.
 
-This project investigates both **supervised** and **unsupervised** learning techniques using the MNIST handwritten digit dataset.
+This project combines both approaches using the **MNIST handwritten digit dataset**.
 
-The study focuses on binary classification of handwritten digits **1** and **7**, followed by clustering analysis of digit **7** to explore different handwriting styles.
+The study investigates:
 
-The complete workflow includes:
+- Binary classification of handwritten digits **1** and **7**
+- Dimensionality reduction using Principal Component Analysis (PCA)
+- Handwriting style discovery using K-Means clustering
+- Hyperparameter optimisation of an RBF Kernel Support Vector Machine
+- Comparative evaluation of supervised learning algorithms
 
-- Data preprocessing
-- Exploratory visualisation
-- Principal Component Analysis (PCA)
-- K-Means clustering
-- Cluster validation
-- Logistic Regression classification
-- RBF Kernel Support Vector Machine
-- Hyperparameter optimisation
-- Performance evaluation
+---
+
+## Project Objectives
+
+- Build accurate classifiers for handwritten digit recognition.
+- Compare the performance of Logistic Regression and RBF Kernel SVM.
+- Reduce image dimensionality using PCA for visual interpretation.
+- Identify natural handwriting style groups using K-Means clustering.
+- Evaluate clustering quality using the Elbow Method and Silhouette Analysis.
+
+---
+
+## Dataset
+
+The project uses the **MNIST Handwritten Digit Dataset**, one of the most widely used benchmark datasets in machine learning.
+
+For this study:
+
+- Only digits **1** and **7** were used for supervised classification.
+- Images of digit **7** were extracted separately for clustering analysis.
 
 ---
 
 # Methodology
 
-The project uses images from the **MNIST handwritten digit dataset**, one of the most widely used benchmark datasets in machine learning.
+## 1. Data Preparation
 
-Two complementary learning tasks were performed.
-
-## Supervised Learning
-
-Binary classification was developed to distinguish handwritten digits **1** and **7** using:
-
-- Logistic Regression
-- RBF Kernel Support Vector Machine (SVM)
-
-Performance was evaluated using:
-
-- Confusion Matrix
-- Cross-validation
-- F1-score
-- Classification accuracy
-
----
-
-## Unsupervised Learning
-
-To better understand writing style variation, only images of handwritten digit **7** were extracted and analysed using K-Means clustering.
+The images were preprocessed prior to modelling.
 
 The workflow included:
 
-- Elbow Method
-- Silhouette Analysis
-- K-Means clustering
-- Cluster centre visualisation
-- Representative image selection
-- Cluster distribution analysis
+- Image extraction
+- Feature preparation
+- Binary class selection (Digits 1 and 7)
+- Train/Test split
+- Feature normalisation
 
 ---
 
-# Exploratory Analysis
+## 2. Principal Component Analysis (PCA)
 
-## Average Digit Appearance
+Principal Component Analysis was applied to project the high-dimensional image features into two principal components for visual interpretation.
 
 <p align="center">
-<img src="figures/Average Digit 1.png" width="350">
-<img src="figures/Average Digit 7.png" width="350">
+<img src="figures/digit-pca-projection.png">
 </p>
 
-The average images illustrate the common structural characteristics learned from each digit class. Digit **1** demonstrates consistent vertical strokes, whereas digit **7** exhibits greater variation in horizontal bars and diagonal writing styles.
+The projection demonstrates clear separation between digits **1** and **7**, indicating that the selected classes are highly distinguishable within the feature space.
 
 ---
 
-## PCA Projection
+# Unsupervised Learning
 
-<p align="center">
-<img src="figures/PCA Projection of Handwritten Digits 1 and 7.png">
-</p>
-
-Principal Component Analysis projects the high-dimensional pixel space into two principal components, allowing visual inspection of class separability. The projection demonstrates that digits **1** and **7** form distinct clusters with only limited overlap, indicating that they are well suited for binary classification.
-
----
-
-# K-Means Clustering
+## K-Means Clustering
 
 To investigate handwriting diversity, K-Means clustering was applied exclusively to handwritten digit **7**.
+
+The clustering workflow consisted of:
+
+- Elbow Method
+- Silhouette Analysis
+- Cluster Centre Visualisation
+- Representative Sample Selection
+- Cluster Distribution Analysis
 
 ---
 
@@ -103,112 +96,120 @@ To investigate handwriting diversity, K-Means clustering was applied exclusively
 ### Elbow Method
 
 <p align="center">
-<img src="figures/Elbow Method for Optimal Number of Clusters.png">
+<img src="figures/clustering-elbow-plot.png">
 </p>
 
-The Elbow Method evaluates clustering compactness by measuring within-cluster inertia across different values of **k**.
+The Elbow Method evaluates clustering compactness by measuring the within-cluster sum of squares (inertia) across different values of **k**.
 
 ---
 
 ### Silhouette Analysis
 
 <p align="center">
-<img src="figures/Silhouette Scores for Different Cluster Sizes.png">
+<img src="figures/clustering-silhouette-plot.png">
 </p>
 
-Silhouette analysis was used alongside the Elbow Method to assess cluster separation and cohesion. Based on both criteria, **k = 9** was selected for the final clustering model.
+Silhouette scores were used to evaluate cluster cohesion and separation. Based on both validation methods, **k = 9** was selected for the final clustering model.
 
 ---
 
 ## Cluster Centres
 
 <p align="center">
-<img src="figures/Cluster Centers for Handwritten Digit 7.png">
+<img src="figures/digit-7-cluster-centres.png">
 </p>
 
-Each cluster centre represents the average writing style of its assigned group, highlighting differences in stroke angle, horizontal bar length, and digit curvature.
+Each cluster centre represents the average handwriting pattern of its assigned cluster, highlighting differences in stroke orientation, curvature, and writing style.
 
 ---
 
 ## Representative Samples
 
 <p align="center">
-<img src="figures/Representative Handwritten Digit 7 Samples.png">
+<img src="figures/digit-7-representative-samples.png">
 </p>
 
-Representative samples provide real handwritten examples from each cluster, demonstrating the diversity of writing styles captured by the clustering process.
+Representative images illustrate real handwritten examples belonging to each cluster, demonstrating the diversity captured by the clustering algorithm.
 
 ---
 
 ## Cluster Distribution
 
 <p align="center">
-<img src="figures/Digit 7 Cluster Distribution.png">
+<img src="figures/digit-7-cluster-size-chart.png">
 </p>
 
-The distribution of samples across the nine clusters indicates that multiple handwriting styles occur naturally within the dataset while remaining reasonably balanced.
+The sample distribution across the nine clusters shows that multiple handwriting styles naturally occur within the dataset while remaining reasonably balanced.
 
 ---
 
-# Supervised Classification
+# Supervised Learning
 
-Two machine learning classifiers were implemented and compared for binary digit recognition.
+Two supervised learning algorithms were implemented and compared.
 
-| Model | Classification Accuracy |
-|-------------------------|:----------------:|
+| Model | Accuracy |
+|--------|----------|
 | Logistic Regression | **100%** |
 | RBF Kernel SVM | **100%** |
 
-Both models achieved perfect classification on the evaluation dataset.
-
 ---
 
-# Logistic Regression
-
-## Confusion Matrix
+## Logistic Regression
 
 <p align="center">
-<img src="figures/Confusion Matrix - Logistic Regression.png" width="500">
+<img src="figures/logistic-regression-training-confusion-matrix.png" width="500">
 </p>
 
-Logistic Regression correctly classified every evaluation sample, demonstrating that the selected feature representation effectively separates handwritten digits **1** and **7**.
+Logistic Regression correctly classified every evaluation sample, demonstrating that digits **1** and **7** are highly separable using the extracted image features.
 
 ---
 
-# Support Vector Machine
+## RBF Kernel Support Vector Machine
 
-## Hyperparameter Optimisation
+### Hyperparameter Optimisation
 
 <p align="center">
-<img src="figures/RBF SVM Hyperparameter Tuning Mean CV F1-score.png">
+<img src="figures/rbf-svm-hyperparameter-heatmap.png">
 </p>
 
-A grid search was performed across multiple combinations of **C** and **Gamma** values. Cross-validation F1-score was used to identify the optimal model configuration.
+A Grid Search with Cross-Validation was performed to determine the optimal combination of **C** and **Gamma** values. Model selection was based on the highest cross-validation F1-score.
 
 ---
 
-## Confusion Matrix
+### Final Confusion Matrix
 
 <p align="center">
-<img src="figures/Confusion Matrix - RBF Kernel SVM.png" width="500">
+<img src="figures/rbf-svm-training-confusion-matrix.png" width="500">
 </p>
 
-The tuned RBF Kernel SVM also achieved perfect classification performance on the evaluation dataset, confirming the strong separability of digits **1** and **7**.
+The tuned RBF Kernel SVM also achieved perfect classification performance on the evaluation dataset.
 
 ---
 
-# Results Summary
+# Results
 
 | Analysis | Result |
-|-----------------------------|----------------|
-| PCA | Clear separation between digits |
-| Optimal K | **9 clusters** |
-| Clustering Method | K-Means |
+|-----------|--------|
+| Dataset | MNIST |
+| Classification Classes | Digits 1 & 7 |
+| Dimensionality Reduction | PCA |
+| Clustering Algorithm | K-Means |
+| Optimal Number of Clusters | **9** |
 | Logistic Regression Accuracy | **100%** |
-| RBF SVM Accuracy | **100%** |
-| Best SVM Selection | Grid Search + Cross Validation |
+| RBF Kernel SVM Accuracy | **100%** |
+| Hyperparameter Optimisation | Grid Search + Cross Validation |
 
-The results demonstrate that combining supervised and unsupervised learning provides complementary insights into handwritten digit recognition. While supervised models achieve highly accurate classification, clustering reveals meaningful structural variations in handwriting styles.
+---
+
+# Key Visualisations
+
+### Average Digit Images
+
+<p align="center">
+<img src="figures/average-digit-images.png" width="650">
+</p>
+
+The average digit images illustrate the typical visual characteristics learned from each class. Digit **1** exhibits a highly consistent vertical structure, whereas digit **7** demonstrates greater variability in stroke angle and horizontal bar formation.
 
 ---
 
@@ -217,32 +218,25 @@ The results demonstrate that combining supervised and unsupervised learning prov
 ```text
 handwritten-digit-classification/
 │
+├── data/
+├── figures/
 ├── notebooks/
 │   └── handwritten-digit-classification.ipynb
-│
-├── figures/
-│
 ├── reports/
-│
 ├── results/
-│
-├── data/
-│
 ├── README.md
-│
 └── requirements.txt
 ```
 
 ---
 
-# Technologies
+# Technologies Used
 
 - Python
 - NumPy
 - Pandas
 - Scikit-learn
 - Matplotlib
-- Seaborn
 - PCA
 - K-Means Clustering
 - Logistic Regression
@@ -250,31 +244,54 @@ handwritten-digit-classification/
 
 ---
 
-# Reproducing the Project
+# How to Run
 
-To reproduce the experiments:
-
-1. Clone this repository.
-2. Install the required Python packages.
-3. Download the MNIST dataset.
-4. Open the notebook:
+Clone the repository:
 
 ```bash
-jupyter notebook notebooks/handwritten-digit-classification.ipynb
+git clone https://github.com/yourusername/handwritten-digit-classification.git
 ```
 
-Running the notebook reproduces the preprocessing pipeline, clustering analysis, model training, hyperparameter tuning, evaluation metrics, and visualisations presented in this repository.
+Install the required packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+Launch Jupyter Notebook:
+
+```bash
+jupyter notebook
+```
+
+Run:
+
+```
+notebooks/handwritten-digit-classification.ipynb
+```
 
 ---
 
 # Limitations
 
-- The classification task is limited to handwritten digits **1** and **7**, rather than the full ten-class MNIST dataset.
-- Clustering analysis focuses exclusively on digit **7** to investigate handwriting variability.
-- The reported perfect classification accuracy should therefore be interpreted within the scope of this binary classification problem.
+- The classification task is restricted to digits **1** and **7** rather than the full ten-class MNIST dataset.
+- The clustering analysis focuses exclusively on digit **7** to investigate handwriting variability.
+- The reported classification accuracy should therefore be interpreted within the scope of this binary classification problem.
 
 ---
 
-# Acknowledgement
+# Future Improvements
 
-This repository presents a professionally organised version of a university machine learning project. The methodology, implementation, and experimental results remain unchanged, while the repository structure, documentation, and presentation have been redesigned to showcase the project as part of a professional machine learning portfolio.
+Potential extensions of this project include:
+
+- Multi-class handwritten digit classification.
+- Deep learning models using Convolutional Neural Networks (CNNs).
+- Non-linear dimensionality reduction techniques such as t-SNE and UMAP.
+- Comparison with ensemble learning methods.
+- Automated handwriting style detection using deep clustering techniques.
+
+---
+
+# Acknowledgements
+
+This repository presents a professionally organised version of an academic machine learning project. The underlying methodology, implementation, and experimental results remain unchanged, while the repository structure, documentation, and visual presentation have been redesigned to showcase the project as part of a professional machine learning portfolio.
