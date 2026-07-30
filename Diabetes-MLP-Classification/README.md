@@ -1,80 +1,89 @@
-# 🩺 Diabetes Prediction using Multi-Layer Perceptron (MLP)
+# 🩺 Diabetes Prediction using Multi-Layer Perceptron (PyTorch)
 
-> An end-to-end deep learning study that develops, evaluates, and compares multiple multilayer perceptron architectures for diabetes prediction, demonstrating how data preprocessing, model design, and evaluation strategy influence clinical classification performance.
+> An end-to-end deep learning project that develops, compares, and evaluates multiple Multi-Layer Perceptron (MLP) architectures for diabetes prediction using clinical measurements.
 
 ![Validation Comparison](figures/validation-experiment-comparison.png)
 
 ---
 
-## Overview
+## Project Overview
 
-Early identification of diabetes is essential for reducing long-term health complications through timely intervention and treatment. Machine learning provides an opportunity to assist clinical decision-making by learning complex relationships between routinely collected patient measurements and disease outcomes.
+Early identification of diabetes can support timely clinical intervention and reduce long-term health complications. This project develops an MLP classifier in **PyTorch** using the **Pima Indians Diabetes Dataset** and systematically compares three neural network architectures under identical experimental conditions.
 
-This project develops a **Multi-Layer Perceptron (MLP)** classifier using **PyTorch** to predict whether a patient is likely to have diabetes based on eight clinical measurements. Rather than evaluating a single neural network, the project investigates how changes in network capacity, learning rate, and dropout influence predictive performance.
-
-Three different MLP architectures were developed and compared under identical experimental conditions before selecting the most clinically appropriate model using **Receiver Operating Characteristic Area Under the Curve (ROC-AUC)** rather than accuracy alone. The selected model was then evaluated on an unseen test dataset to assess its ability to generalise beyond the training data.
-
-The study demonstrates that careful preprocessing, appropriate evaluation metrics, and systematic experimentation are as important as neural network architecture itself when developing reliable predictive models for healthcare applications.
+The final model was selected using **ROC-AUC**, providing a clinically meaningful assessment of discrimination performance beyond simple accuracy.
 
 ---
 
-## Dataset and Data Preparation
+## Dataset
 
-The project uses the **Pima Indians Diabetes Dataset**, originally collected by the National Institute of Diabetes and Digestive and Kidney Diseases, containing clinical measurements commonly associated with diabetes risk. The prediction task is binary classification, where the model determines whether a patient is diabetic or non-diabetic based on eight diagnostic features. :contentReference[oaicite:1]{index=1}
+The dataset contains **768 patient records** with eight clinical features:
 
-Before model development, the dataset underwent extensive preprocessing to improve data quality and reduce bias introduced by clinically impossible values.
+- Pregnancies
+- Glucose
+- Blood Pressure
+- Skin Thickness
+- Insulin
+- BMI
+- Diabetes Pedigree Function
+- Age
 
-Several variables contained zero values that are physiologically impossible, particularly Blood Pressure, Skin Thickness and BMI. Rather than removing a large proportion of observations, zero values were carefully replaced using appropriate statistical imputation while preserving the overall dataset size. Outlier treatment was then applied only to the strongest predictors identified through exploratory analysis, followed by feature standardisation and stratified data splitting to maintain class balance during training. :contentReference[oaicite:2]{index=2}
+Target:
+- Outcome (0 = Non-diabetic, 1 = Diabetic)
 
-### Feature Distributions
+---
+
+## Data Preprocessing
+
+The preprocessing pipeline included:
+
+- Exploratory data analysis (histograms, boxplots, density plots and correlation heatmap)
+- Identification of physiologically impossible zero values
+- Mean imputation for Blood Pressure and Skin Thickness zeros
+- Class-wise IQR outlier treatment for Glucose and BMI
+- Z-score feature standardisation
+- Stratified train/validation split
 
 ![Feature Distributions](figures/cleaned-feature-distributions.png)
 
-The cleaned dataset exhibits substantially improved feature distributions while preserving clinically meaningful variation across the patient population.
-
-### Feature Correlation
-
 ![Correlation Heatmap](figures/feature-correlation-heatmap.png)
-
-Exploratory analysis revealed that **Glucose** showed the strongest relationship with diabetes outcome, followed by **BMI**, supporting their importance during subsequent predictive modelling.
 
 ---
 
 ## Model Development
 
-A fully connected neural network was implemented entirely in **PyTorch** using Rectified Linear Unit (ReLU) activation, dropout regularisation and the Adam optimiser.
+All models were implemented using:
 
-Instead of searching for a single optimal architecture through trial and error, three controlled experiments were designed to evaluate the influence of network complexity and optimisation strategy:
+- PyTorch
+- ReLU activation
+- Adam optimiser
+- BCEWithLogitsLoss
+- Dropout regularisation
+- Early stopping
+- Mini-batch training
 
-| Experiment | Hidden Layers | Learning Rate | Dropout |
-|------------|--------------|--------------:|---------:|
-| Small | 32 → 16 | 0.01 | 0.20 |
-| Medium (Baseline) | 64 → 32 | 0.001 | 0.20 |
-| Large | 128 → 64 | 0.0005 | 0.30 |
-
-All experiments were trained using weighted binary cross-entropy loss, mini-batch learning, early stopping and identical preprocessing, ensuring that observed performance differences resulted primarily from architectural choices.
+| Model | Hidden Layers | LR | Dropout |
+|-------|---------------|----:|---------:|
+| Exp1 Small | 32 → 16 | 0.0100 | 0.20 |
+| Exp2 Baseline | 64 → 32 | 0.0010 | 0.20 |
+| **Exp3 Large** | **128 → 64** | **0.0005** | **0.30** |
 
 ---
 
 ## Validation Performance
 
+| Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
+|------|---------:|----------:|-------:|---:|--------:|
+| Exp1 Small | 0.7931 | 0.6429 | **0.9000** | **0.7500** | 0.8655 |
+| Exp2 Baseline | 0.7845 | 0.6415 | 0.8500 | 0.7312 | 0.8632 |
+| **Exp3 Large** | 0.7759 | 0.6346 | 0.8250 | 0.7174 | **0.8704** |
+
+The Large MLP achieved the highest validation ROC-AUC and was selected as the final model.
+
 ![Training Curves](figures/training-loss-curves.png)
-
-Training behaviour remained stable across all three experiments with no evidence of severe overfitting. Increasing network capacity produced smoother convergence while dropout and early stopping effectively controlled model complexity.
-
-Although the three architectures achieved similar overall predictive performance, the larger network consistently demonstrated superior discrimination capability when evaluated using ROC-AUC.
-
-### Validation ROC-AUC Comparison
-
-![Validation Comparison](figures/validation-experiment-comparison.png)
-
-Among the three candidate models, the **Large MLP** achieved the highest validation ROC-AUC (**0.8704**), making it the preferred architecture for clinical prediction despite not achieving the highest validation accuracy. This highlights an important principle in medical machine learning: discrimination capability is often more valuable than raw accuracy when identifying high-risk patients. :contentReference[oaicite:3]{index=3}
 
 ---
 
-## Final Test Evaluation
-
-After selecting the Large MLP, the model was evaluated on a completely unseen test dataset.
+## Final Test Performance
 
 | Metric | Score |
 |--------|------:|
@@ -84,13 +93,9 @@ After selecting the Large MLP, the model was evaluated on a completely unseen te
 | F1-score | **68.29%** |
 | ROC-AUC | **0.8480** |
 
-The final model maintained strong predictive performance on unseen data, demonstrating good generalisation while preserving high discrimination capability.
-
-### Confusion Matrix
-
 ![Confusion Matrix](figures/test-confusion-matrix.png)
 
-The confusion matrix illustrates balanced classification performance with strong detection of diabetic patients while maintaining an acceptable false-positive rate, making the model suitable for screening-oriented prediction tasks.
+The selected model demonstrated good generalisation while maintaining strong sensitivity for identifying diabetic patients.
 
 ---
 
@@ -98,43 +103,38 @@ The confusion matrix illustrates balanced classification performance with strong
 
 ```text
 diabetes-mlp-classification/
-│
-├── notebooks/
-│   └── diabetes-mlp-classification.ipynb
-│
-├── reports/
-│   └── diabetes-mlp-academic-report.pdf
-│
-├── figures/
-│
-├── results/
-│
 ├── data/
-│
+├── figures/
+├── notebooks/
+├── reports/
+├── results/
 └── README.md
 ```
 
 ---
 
-## Reproducing the Project
+## Technologies
 
-The original dataset is not distributed within this repository.
+- Python
+- PyTorch
+- NumPy
+- Pandas
+- Matplotlib
+- Scikit-learn
 
-To reproduce the experiments:
+---
 
-1. Obtain the authorised dataset.
-2. Configure the dataset directory.
-3. Install the required Python dependencies.
-4. Execute the notebook:
+## Key Learning Outcomes
 
-```bash
-jupyter notebook notebooks/diabetes-mlp-classification.ipynb
-```
-
-The notebook reproduces the complete workflow, including preprocessing, exploratory analysis, model training, validation experiments, and final test evaluation.
+- Clinical data preprocessing
+- Exploratory data analysis
+- Neural network design
+- Hyperparameter comparison
+- Medical AI evaluation
+- ROC-AUC based model selection
 
 ---
 
 ## Acknowledgement
 
-This repository is a professionally organised version of an original university coursework project. The experimental methodology, implementation, and reported findings remain unchanged, while the repository structure, documentation, and presentation have been redesigned to improve clarity, reproducibility, and portfolio presentation.
+This repository is a professionally documented version of an academic coursework project. The underlying methodology and experimental findings remain unchanged while the documentation has been redesigned for reproducibility and portfolio presentation.
