@@ -1,8 +1,7 @@
 # 🩸 Blood Cell Classification with MiniResNet
 
-> A lightweight residual deep learning model for eight-class blood cell image classification, developed entirely from scratch using PyTorch and evaluated through baseline comparisons, controlled ablation studies, and comprehensive validation metrics.
+> A deep learning model for eight-class blood cell image classification, developed entirely from scratch using PyTorch and evaluated through baseline comparisons, controlled ablation studies, and comprehensive validation metrics.
 
-![Model Comparison](figures/architecture-comparison.png)
 
 ---
 
